@@ -1,9 +1,0 @@
-.wrapper {
-  height: 260px;
-  width: 100%;
-}
-.image {
-  max-width: 100%;
-  display: block;
-  object-fit: cover;
-}
