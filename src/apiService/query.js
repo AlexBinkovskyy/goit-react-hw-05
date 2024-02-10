@@ -1,18 +1,16 @@
 import axios from 'axios';
 
-const ACCESS_KEY = 'Client-ID HGbT0DpGTed59sCna-QTm2ht1TZGiEGD-Z7j2y5epBc';
-axios.defaults.baseURL = 'https://api.unsplash.com/search/photos';
+axios.defaults.baseURL = 'https://65c23f3af7e6ea59682af8d1.mockapi.io'
 
-axios.defaults.headers.common['Authorization'] = ACCESS_KEY;
-axios.defaults.params = {
-  orientation: 'landscape',
-  per_page: 16,
-};
+export const getPayments = async ({controller}) => {
+const response = await axios.get('/payments', {signal: controller.signal})
 
-export const fetchQuery = async (queryString, page) => {
-  const response = await axios.get(`?query=${queryString.split('/')[1]}&page=${page}`);
-  console.log('залишилося запитів:', response.headers['x-ratelimit-remaining']);
-  console.log(response.data);
-  const { results, total, total_pages } = response.data;
-  return { results, total, total_pages };
-};
+return response.data;
+}
+
+
+export const getPaymentsById = async (paymentId) => {
+
+const response = await axios.get(`/payments/${paymentId}`)
+return response.data;
+}
