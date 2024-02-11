@@ -2,18 +2,20 @@ import { useEffect } from 'react';
 import { fetchData, fetchParams } from '../../apiService/query';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import css from './Movieslist.module.css'
+import css from './Movieslist.module.css';
 
 export const Movieslist = () => {
   const [trends, setTrends] = useState([]);
   const [error, setError] = useState(false);
-  
+
   useEffect(() => {
     const controller = new AbortController();
 
     async function fetchList() {
       try {
-        const resp = await fetchData(fetchParams.trending, {controller: controller});
+        const resp = await fetchData(fetchParams.trending, {
+          controller: controller,
+        });
         setTrends(resp);
       } catch (error) {
         if (error.code !== 'ERR_CANCELED') setError(true);

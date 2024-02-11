@@ -27,7 +27,7 @@ export const fetchParams = {
   },
 };
 
-export const fetchData = async (fetchParams) => {
+export const fetchData = async (fetchParams, {controller}) => {
   try {
     const response = await axios
       .request(fetchParams);
