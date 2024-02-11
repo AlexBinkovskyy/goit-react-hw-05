@@ -9,9 +9,16 @@ export const MoviesPage = () => {
       <label htmlFor={inputId} className={css.label}>
         Search by keyword
       </label>
-      <input type="text" id={inputId} placeholder='Type something here' className={css.input}/>
+      <input
+        type="text"
+        id={inputId}
+        placeholder="Type something here"
+        className={css.input}
+      />
 
-      <button type="submit" className={css.btn}>Search</button>
+      <button type="submit" className={css.btn}>
+        Search
+      </button>
     </div>
   );
 };

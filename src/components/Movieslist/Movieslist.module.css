@@ -1,24 +1,3 @@
-.listItem {
-  color: rgba(0, 0, 0, 0.63);
-  transition: color ease 100ms;
-  padding-left: 10px;
-}
-
-.listItem:nth-child(odd) {
-  background-color: aliceblue;
-  border-radius: 5px;
-  box-shadow: 0px 2px 21px -9px rgba(0, 0, 0, 0.75);
-}
-
-.listItem:last-child{
-  margin-bottom: 50px;
-}
-
-.listItem:hover,
-.listItem:focus {
-  color: black;
-}
-
 h3 {
   display: inline-block;
   margin-bottom: 8px;

@@ -9,6 +9,6 @@ const buildLinkClass = ({ isActive }) => {
 export const Header = () => {
 return <header className={css.header}>
     <NavLink to='/' className={ buildLinkClass}>Home</NavLink>
-    <NavLink to='/movies' className={buildLinkClass}>Movies</NavLink>
+    <NavLink to='movies' className={buildLinkClass}>Movies</NavLink>
 </header>
 }

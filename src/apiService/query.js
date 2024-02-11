@@ -16,46 +16,32 @@ export const fetchParams = {
     params: { page: '1' },
   },
   movieDetails: {
-    url: `movie/${1014590}`,
+    url: `movie/IdToReplace`,
   },
   movieCast: {
-    url: `movie/${1014590}/credits`,
+    url: `movie/IdToReplace/credits`,
   },
   movieReviews: {
-    url: `movie/${1014590}/reviews`,
+    url: `movie/IdToReplace/reviews`,
     params: { page: '1' },
   },
 };
 
-export const fetchData = async (fetchParams, {controller}) => {
+export const fetchData = async (
+  fetchParams // {controller}
+) => {
   try {
-    const response = await axios
-      .request(fetchParams);
-      console.log(response.data);
-      return response.data;
+    const response = await axios.request(
+      fetchParams
+      //{signal: controller.signal},
+    );
+    return response.data;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 };
 
-// const trending = {
-//     url: 'trending/movie/day',
-//   };
-
-//   const movieSearch = {
-//     url: 'search/movie',
-//     params: { include_adult: 'false', page: '1' },
-//   };
-
-//   const movieDetails = {
-//     url: 'movie/movie_id',
-//   };
-
-//   const movieCredits = {
-//     url: 'movie/movie_id/credits',
-//   };
-
-//   const movieReviews = {
-//     url: 'movie/movie_id/reviews',
-//     params: { page: '1' },
-//   };
+export const createPosterPath = (poster_path) => {
+  return `https://image.tmdb.org/t/p/w500${poster_path}`
+};
