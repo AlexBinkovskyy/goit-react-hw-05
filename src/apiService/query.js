@@ -1,18 +1,61 @@
 import axios from 'axios';
 
-const ACCESS_KEY = 'Client-ID HGbT0DpGTed59sCna-QTm2ht1TZGiEGD-Z7j2y5epBc';
-axios.defaults.baseURL = 'https://api.unsplash.com/search/photos';
-
-axios.defaults.headers.common['Authorization'] = ACCESS_KEY;
-axios.defaults.params = {
-  orientation: 'landscape',
-  per_page: 16,
+const trending = {
+  method: 'GET',
+  url: 'https://api.themoviedb.org/3/trending/movie/day',
+  params: {language: 'en-US'},
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1N2E3YjYyYTQ4MmZhYzIwMWU3OWI5YTFlY2IyMWViOSIsInN1YiI6IjY1YzY5Mjk1MjY2Nzc4MDE3YzU2ZjBkOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Yz8aIZIeNB3Z9T2KlKExdpR2fYzBqnb9uvUq4tNjAGQ'
+  }
 };
 
-export const fetchQuery = async (queryString, page) => {
-  const response = await axios.get(`?query=${queryString.split('/')[1]}&page=${page}`);
-  console.log('залишилося запитів:', response.headers['x-ratelimit-remaining']);
-  console.log(response.data);
-  const { results, total, total_pages } = response.data;
-  return { results, total, total_pages };
+const movieSearch = {
+  method: 'GET',
+  url: 'https://api.themoviedb.org/3/search/movie',
+  params: {include_adult: 'false', language: 'en-US', page: '1'},
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1N2E3YjYyYTQ4MmZhYzIwMWU3OWI5YTFlY2IyMWViOSIsInN1YiI6IjY1YzY5Mjk1MjY2Nzc4MDE3YzU2ZjBkOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Yz8aIZIeNB3Z9T2KlKExdpR2fYzBqnb9uvUq4tNjAGQ'
+  }
 };
+
+const movieDetails = {
+  method: 'GET',
+  url: 'https://api.themoviedb.org/3/movie/movie_id',
+  params: {language: 'en-US'},
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1N2E3YjYyYTQ4MmZhYzIwMWU3OWI5YTFlY2IyMWViOSIsInN1YiI6IjY1YzY5Mjk1MjY2Nzc4MDE3YzU2ZjBkOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Yz8aIZIeNB3Z9T2KlKExdpR2fYzBqnb9uvUq4tNjAGQ'
+  }
+};
+
+const movieCredits = {
+  method: 'GET',
+  url: 'https://api.themoviedb.org/3/movie/movie_id/credits',
+  params: {language: 'en-US'},
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1N2E3YjYyYTQ4MmZhYzIwMWU3OWI5YTFlY2IyMWViOSIsInN1YiI6IjY1YzY5Mjk1MjY2Nzc4MDE3YzU2ZjBkOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Yz8aIZIeNB3Z9T2KlKExdpR2fYzBqnb9uvUq4tNjAGQ'
+  }
+};
+
+const movieReviews = {
+  method: 'GET',
+  url: 'https://api.themoviedb.org/3/movie/movie_id/reviews',
+  params: {language: 'en-US', page: '1'},
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1N2E3YjYyYTQ4MmZhYzIwMWU3OWI5YTFlY2IyMWViOSIsInN1YiI6IjY1YzY5Mjk1MjY2Nzc4MDE3YzU2ZjBkOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Yz8aIZIeNB3Z9T2KlKExdpR2fYzBqnb9uvUq4tNjAGQ'
+  }
+};
+
+
+axios
+  .request(options)
+  .then(function (response) {
+    console.log(response.data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });
