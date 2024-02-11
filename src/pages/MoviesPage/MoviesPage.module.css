@@ -1,11 +1,39 @@
 .wrapper {
-    padding: 10px;
+  padding: 10px;
 }
 
 .label {
-display: block;
-margin-bottom: 5px;
+  display: block;
+  margin-bottom: 5px;
 }
-.input{
-    margin-right: 10px;
+.input {
+  margin-right: 10px;
+  outline: none;
+  padding-left: 5px;
+  padding-bottom: 3px;
+  background-color: aliceblue;
+  align-items: center;
+  border: 0.5px solid black;
+  border-radius: 5px;
+  transition: box-shadow ease 100ms;
+}
+.btn {
+  outline: none;
+  border: 0.5px solid black;
+  border-radius: 5px;
+  padding-bottom: 3px;
+  background-color: aliceblue;
+  transition: box-shadow ease 100ms;
+}
+
+.btn:hover {
+  box-shadow: 0px 8px 21px -9px rgba(0, 0, 0, 0.75);
+}
+.input:hover,
+.input:focus {
+  box-shadow: 0px 8px 21px -9px rgba(0, 0, 0, 0.75);
+}
+.input::placeholder {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.24);
 }
