@@ -5,7 +5,13 @@ import {
   fetchData,
   fetchParams,
 } from '../../apiService/query';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import css from './MovieDetailsPage.module.css';
+import clsx from 'clsx';
+
+const buildLinkClass = ({ isActive }) => {
+  return clsx(css.link, isActive && css.active);
+};
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
@@ -28,25 +34,27 @@ export default function MovieDetailsPage() {
   }, []);
 
   return (
-    <div>
-      <Link to="/">Back</Link>
+    <div className={css.wrapper}>
+      <NavLink to="/" className={buildLinkClass}>
+        Back to previous page
+      </NavLink>
       {movieDetail && (
-        <div>
+        <div className={css.imgWrap}>
           <img
             src={createPosterPath(movieDetail.poster_path)}
             alt={movieDetail.title}
-            width="300"
+            className={css.img}
           />
           <div>
-            <h2>{movieDetail.title}</h2>
-            <p>Duration: {movieDetail.runtime}</p>
-            <h3>Overview</h3>
-            <p>{movieDetail.overview}</p>
-            <h4>Genres:</h4>
-            <ul>
+            <h2 className={css.title}>{movieDetail.title}</h2>
+            <p className={css.runtime}>Duration: {movieDetail.runtime}</p>
+            <h3 className={css.titleThird}>Overview</h3>
+            <p className={css.parag}>{movieDetail.overview}</p>
+            <h4 className={css.titleFourth}>Genres:</h4>
+            <ul className={css.list}>
               {movieDetail.genres.map(genree => (
-                <li key={genree.id}>
-                  <span>{genree.name}</span>
+                <li key={genree.id} className={css.listItem}>
+                  <span className={css.genre}>{genree.name}</span>
                 </li>
               ))}
             </ul>

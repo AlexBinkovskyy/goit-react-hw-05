@@ -12,9 +12,16 @@
 }
 
 .link {
-  transition: color ease 100ms;
   color: black;
+  transition: color box-shadow ease 150ms;
+  transition: box-shadow ease 150ms;
 }
+
+.link:hover,
+.link:focus {
+  box-shadow: 0px 2px 21px -9px rgba(0, 0, 0, 0.75);
+}
+
 .active {
   color: red;
 }
