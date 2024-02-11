@@ -1,0 +1,23 @@
+.listItem {
+  color: rgba(0, 0, 0, 0.63);
+  transition: color ease 100ms;
+}
+
+.listItem:nth-child(odd) {
+  background-color: aliceblue;
+  border-radius: 5px;
+  box-shadow: 0px 2px 21px -9px rgba(0, 0, 0, 0.75);
+}
+
+.listItem:hover,
+.listItem:focus {
+  color: black;
+}
+
+.wrapper {
+  padding: 10px;
+}
+h3{
+    display: inline-block;
+    margin-bottom: 8px;
+}

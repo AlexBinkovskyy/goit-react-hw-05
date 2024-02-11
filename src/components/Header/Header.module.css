@@ -1,0 +1,28 @@
+.header {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: aliceblue;
+  border-radius: 5px;
+  box-shadow: 0px 2px 21px -9px rgba(0, 0, 0, 0.75);
+  font-weight: 500;
+}
+
+.link {
+  transition: color ease 100ms;
+  color: black;
+}
+.active {
+  color: red;
+}
+
+.link:not(:last-child) {
+  margin-right: 15px;
+}
+
+.link:hover:not(.active),
+.link:focus:not(.active) {
+  color: rgb(158, 0, 0);
+}

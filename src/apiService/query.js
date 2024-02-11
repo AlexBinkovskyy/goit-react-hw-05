@@ -27,15 +27,15 @@ export const fetchParams = {
   },
 };
 
-export const fetchData = fetchParams => {
-  axios
-    .request(fetchParams)
-    .then(function (response) {
+export const fetchData = async (fetchParams) => {
+  try {
+    const response = await axios
+      .request(fetchParams);
       console.log(response.data);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
+      return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // const trending = {
