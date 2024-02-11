@@ -1,0 +1,11 @@
+.wrapper {
+    padding: 10px;
+}
+
+.label {
+display: block;
+margin-bottom: 5px;
+}
+.input{
+    margin-right: 10px;
+}

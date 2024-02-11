@@ -1,6 +1,7 @@
 .listItem {
   color: rgba(0, 0, 0, 0.63);
   transition: color ease 100ms;
+  padding-left: 10px;
 }
 
 .listItem:nth-child(odd) {
@@ -15,9 +16,10 @@
 }
 
 .wrapper {
-  padding: 10px;
+
 }
 h3{
     display: inline-block;
     margin-bottom: 8px;
+    padding-left: 10px;
 }
