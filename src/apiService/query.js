@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect } from 'react';
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 axios.defaults.method = 'GET';
@@ -42,6 +43,28 @@ export const fetchData = async (
   }
 };
 
-export const createPosterPath = (poster_path) => {
-  return `https://image.tmdb.org/t/p/w500${poster_path}`
+export const createPosterPath = poster_path => {
+  return `https://image.tmdb.org/t/p/w500${poster_path}`;
 };
+
+export function FetchAndWriteState( movieId, fetchType, stateSetter) {
+  const movieDetailsFetchParams = fetchParams[fetchType].url.replace(
+    'IdToReplace',
+    movieId
+  );
+
+  useEffect(() => {
+    async function fetchMovie() {
+      try {
+        if (!movieDetailsFetchParams) {
+          return;
+        }
+        const resp = await fetchData(movieDetailsFetchParams);
+        stateSetter(resp);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchMovie();
+  }, []);
+}

@@ -1,43 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router';
-import {
-  createPosterPath,
-  fetchData,
-  fetchParams,
-} from '../../apiService/query';
-import { NavLink } from 'react-router-dom';
+import { FetchAndWriteState, createPosterPath } from '../../apiService/query';
+import { useNavigate, NavLink } from 'react-router-dom';
 import css from './MovieDetailsPage.module.css';
-import clsx from 'clsx';
-
-const buildLinkClass = ({ isActive }) => {
-  return clsx(css.link, isActive && css.active);
-};
+import { Outlet } from 'react-router-dom';
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
   const [movieDetail, setMovieDetail] = useState(null);
-  const movieDetailsFetchParams = fetchParams.movieDetails.url.replace(
-    'IdToReplace',
-    movieId
-  );
+  const navigate = useNavigate();
+  const goBack = () => navigate(-1);
+  const movieDetails = 'movieDetails'
 
-  useEffect(() => {
-    async function fetchMovie() {
-      try {
-        const resp = await fetchData(movieDetailsFetchParams);
-        setMovieDetail(resp);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchMovie();
-  }, []);
+  FetchAndWriteState(movieId, movieDetails, setMovieDetail);
 
-  return (
+   return (
     <div className={css.wrapper}>
-      <NavLink to="/" className={buildLinkClass}>
-        Back to previous page
-      </NavLink>
+      <button type="button" onClick={goBack} className={css.goBackBtn}>
+        Go back
+      </button>
       {movieDetail && (
         <div className={css.imgWrap}>
           <img
@@ -45,9 +26,9 @@ export default function MovieDetailsPage() {
             alt={movieDetail.title}
             className={css.img}
           />
-          <div>
+          <div className={css.globalwrap}>
             <h2 className={css.title}>{movieDetail.title}</h2>
-            <p className={css.runtime}>Duration: {movieDetail.runtime}</p>
+            <p className={css.runtime}>Duration: {movieDetail.runtime} min.</p>
             <h3 className={css.titleThird}>Overview</h3>
             <p className={css.parag}>{movieDetail.overview}</p>
             <h4 className={css.titleFourth}>Genres:</h4>
@@ -58,6 +39,16 @@ export default function MovieDetailsPage() {
                 </li>
               ))}
             </ul>
+            <div className={css.infoWrap}>
+              <h3 className={css.titleThird}>Additional information</h3>
+              <NavLink to="cast" className={css.linkInfo}>
+                Cast
+              </NavLink>
+              <NavLink to="reviews" className={css.linkInfo}>
+                Reviews
+              </NavLink>
+            </div>{' '}
+          <Outlet />
           </div>
         </div>
       )}

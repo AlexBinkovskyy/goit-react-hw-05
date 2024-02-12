@@ -5,25 +5,25 @@ import css from './Movieslist.module.css';
 import { Page404 } from '../../pages/Page404/Page404';
 import { MovieListItem } from '../MovieListItem/MovieListItem';
 
-export const Movieslist = () => {
-  const [trends, setTrends] = useState([]);
+export const Movieslist = ({trends, setTrends}) => {
+
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    // const controller = new AbortController();
+    const controller = new AbortController();
 
     async function fetchList() {
       try {
-        const resp = await fetchData(fetchParams.trending, //{ controller }
+        const resp = await fetchData(fetchParams.trending, { controller }
           );
-        setTrends(resp);
+       setTrends(resp);
       } catch (error) {
         if (error.code !== 'ERR_CANCELED') setError(true);
       }
     }
     fetchList();
     return () => {
-      //controller.abort();
+      controller.abort();
     };
   }, []);
 
