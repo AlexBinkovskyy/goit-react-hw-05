@@ -4,6 +4,7 @@ import { FetchAndWriteState, createPosterPath } from '../../apiService/query';
 import { useNavigate, NavLink } from 'react-router-dom';
 import css from './MovieDetailsPage.module.css';
 import { Outlet } from 'react-router-dom';
+import clsx from 'clsx';
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
@@ -11,6 +12,10 @@ export default function MovieDetailsPage() {
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
   const movieDetails = 'movieDetails'
+
+  const buildLinkClass = ({ isActive }) => {
+    return clsx(css.link, css.linkInfo, isActive && css.active);
+  };
 
   FetchAndWriteState(movieId, movieDetails, setMovieDetail);
 
@@ -41,10 +46,10 @@ export default function MovieDetailsPage() {
             </ul>
             <div className={css.infoWrap}>
               <h3 className={css.titleThird}>Additional information</h3>
-              <NavLink to="cast" className={css.linkInfo}>
+              <NavLink to="cast" className={buildLinkClass}>
                 Cast
               </NavLink>
-              <NavLink to="reviews" className={css.linkInfo}>
+              <NavLink to="reviews" className={buildLinkClass}>
                 Reviews
               </NavLink>
             </div>{' '}
