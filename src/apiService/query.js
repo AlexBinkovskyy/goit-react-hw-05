@@ -13,7 +13,7 @@ export const fetchParams = {
     url: 'trending/movie/day',
   },
   movieSearch: {
-    url: 'search/movie',
+    url: 'search/movie?query=',
     params: { page: '1' },
   },
   movieDetails: {
@@ -29,14 +29,14 @@ export const fetchParams = {
 };
 
 export const fetchData = async (
-  fetchParams , 
+  fetchParams
   //{controller}
 ) => {
   try {
-      const response = await axios.request(
-      fetchParams,
+    const response = await axios.request(
+      fetchParams
       //{signal: controller.signal},
-      );
+    );
     return response.data;
   } catch (error) {
     console.error(error);
@@ -48,11 +48,15 @@ export const createPosterPath = poster_path => {
   return `https://image.tmdb.org/t/p/w500${poster_path}`;
 };
 
-export function FetchAndWriteState( movieId, fetchType, stateSetter) {
-  const movieDetailsFetchParams = fetchParams[fetchType].url.replace(
-    'IdToReplace',
-    movieId
-  );
+export function FetchAndWriteState(movieId, fetchType, stateSetter) {
+  let movieDetailsFetchParams = '';
+
+  if (movieId) {
+    movieDetailsFetchParams = fetchParams[fetchType].url.replace(
+      'IdToReplace',
+      movieId
+    );
+  }
 
   useEffect(() => {
     async function fetchMovie() {
