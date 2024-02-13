@@ -21,7 +21,7 @@ export const MovieCastItem = ({ movieCast }) => {
                   <img src={defaultImg} alt={mcast.character} width="80px" className={css.img}/>
                 )}
                 <h5 className={css.h5}>
-                  Character name: <br /><span className={css.span}>{mcast.character}</span>
+                  Character name: <br /><span className={css.span}>{mcast.character? mcast.character : <span className={css.charSpan}>unfilled character</span>}</span>
                 </h5>
                 <h6 className={css.h6}>
                   Original name: <br /> <span className={css.span}>{mcast.original_name}</span>

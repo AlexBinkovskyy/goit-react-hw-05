@@ -29,13 +29,14 @@ export const fetchParams = {
 };
 
 export const fetchData = async (
-  fetchParams // {controller}
+  fetchParams , 
+  //{controller}
 ) => {
   try {
-    const response = await axios.request(
-      fetchParams
+      const response = await axios.request(
+      fetchParams,
       //{signal: controller.signal},
-    );
+      );
     return response.data;
   } catch (error) {
     console.error(error);

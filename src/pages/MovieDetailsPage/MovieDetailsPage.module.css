@@ -32,6 +32,11 @@
   transition: color ease 150ms;
 }
 
+.active{
+  color: red;
+  font-weight: 600;
+}
+
 .imgWrap {
   display: inherit;
 }
@@ -86,4 +91,10 @@
 .genre {
   text-align: center;
 
+}
+.globalwrap{
+  width: 70vw;
+}
+.infoWrap{
+  margin-bottom: 30px;
 }

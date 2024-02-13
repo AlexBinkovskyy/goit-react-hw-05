@@ -10,8 +10,8 @@ export const Movieslist = ({trends, setTrends}) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const controller = new AbortController();
-
+    const controller = new AbortController;
+ 
     async function fetchList() {
       try {
         const resp = await fetchData(fetchParams.trending, { controller }

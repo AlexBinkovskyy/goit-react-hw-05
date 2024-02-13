@@ -34,3 +34,6 @@
 .span {
     font-size: 14px;
 }
+.charSpan {
+    color: red;
+}
