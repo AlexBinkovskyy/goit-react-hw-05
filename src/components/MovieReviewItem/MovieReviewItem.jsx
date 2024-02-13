@@ -5,9 +5,8 @@ export const MovieReviewItem = ({ movieReview }) => {
   const defaultImg =
     'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
 
-  return (
-    movieReview.results > 0 ?
-    (<div className={css.wrapper}>
+  return <div className={css.wrapper}>
+      {movieReview.results && <p className={css.emptyreview}>There are no any reviews to display yet ...</p>}
       <ul className={css.list}>
         {movieReview.results.map(review => (
           <li key={review.id} className={css.listItem}>
@@ -27,6 +26,5 @@ export const MovieReviewItem = ({ movieReview }) => {
           </li>
         ))}
       </ul>
-    </div>) : <p className={css.emptyreview}>There are no any reviews to display yet ...</p>
-  );
-};
+    </div>}
+

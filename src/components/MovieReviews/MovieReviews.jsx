@@ -12,7 +12,7 @@ export const MovieReviews = () => {
 
   return (
     <div>
-      <h2>MovieReviews page</h2>
+      <h2>Movie Reviews page</h2>
       {movieReview && (
         <div>
           <MovieReviewItem movieReview={movieReview} />
