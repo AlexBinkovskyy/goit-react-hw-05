@@ -6,7 +6,7 @@ export const MovieReviewItem = ({ movieReview }) => {
     'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
 
   return <div className={css.wrapper}>
-      {movieReview.results && <p className={css.emptyreview}>There are no any reviews to display yet ...</p>}
+      {!movieReview.results.length && <p className={css.emptyreview}>There are no any reviews to display yet ...</p>}
       <ul className={css.list}>
         {movieReview.results.map(review => (
           <li key={review.id} className={css.listItem}>
