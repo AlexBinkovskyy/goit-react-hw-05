@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import { FetchAndWriteState, createPosterPath } from '../../apiService/query';
-import { useNavigate, NavLink, Link, useLocation } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import css from './MovieDetailsPage.module.css';
 import { Outlet } from 'react-router-dom';
 import clsx from 'clsx';
@@ -9,11 +9,8 @@ import clsx from 'clsx';
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
   const [movieDetail, setMovieDetail] = useState(null);
-  const navigate = useNavigate();
-  const goBack = () => navigate(-1);
-  const movieDetails = 'movieDetails'
-    const location =  useLocation();
-    console.log('22', location);
+  const movieDetails = 'movieDetails';
+  const location = useLocation();
 
   const buildLinkClass = ({ isActive }) => {
     return clsx(css.link, css.linkInfo, isActive && css.active);
@@ -21,9 +18,11 @@ export default function MovieDetailsPage() {
 
   FetchAndWriteState(movieId, movieDetails, setMovieDetail);
 
-   return (
+  return (
     <div className={css.wrapper}>
-      <Link to={location.state} className={css.goBackBtn}>Go back to search</Link>
+      <Link to={location.state} className={css.goBackBtn}>
+        Go back to search
+      </Link>
       {movieDetail && (
         <div className={css.imgWrap}>
           <img
@@ -46,14 +45,14 @@ export default function MovieDetailsPage() {
             </ul>
             <div className={css.infoWrap}>
               <h3 className={css.titleThird}>Additional information</h3>
-              <NavLink to="cast" className={buildLinkClass}>
+              <NavLink to="cast" className={buildLinkClass} state={location}>
                 Cast
               </NavLink>
-              <NavLink to="reviews" className={buildLinkClass}>
+              <NavLink to="reviews" className={buildLinkClass} state={location}>
                 Reviews
               </NavLink>
             </div>
-          <Outlet />
+            <Outlet />
           </div>
         </div>
       )}

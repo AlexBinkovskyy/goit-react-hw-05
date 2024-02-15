@@ -4,7 +4,7 @@ import css from './MovieListItem.module.css';
 
 export const MovieListItem = ({ trends }) => {
   const location =  useLocation();
-  console.log( '111', location);
+
   return (
     <div>
       {trends.results.map(trend => {

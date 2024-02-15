@@ -36,6 +36,7 @@ export const MoviesPage = () => {
 
   const handleSearch = event => {
     params.set('searchQuery', event)
+    console.log(params.get('searchQuery'));
     setParams(params);
   };
 
@@ -67,7 +68,7 @@ export const MoviesPage = () => {
             movieSearchList && (
               <div>
                 <ul>
-                  <MovieListItem trends={movieSearchList} />
+                  <MovieListItem trends={movieSearchList}/>
                 </ul>
               </div>
             )
