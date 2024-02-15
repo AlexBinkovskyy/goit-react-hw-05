@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import { FetchAndWriteState, createPosterPath } from '../../apiService/query';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate, NavLink, Link, useLocation } from 'react-router-dom';
 import css from './MovieDetailsPage.module.css';
 import { Outlet } from 'react-router-dom';
 import clsx from 'clsx';
@@ -12,6 +12,8 @@ export default function MovieDetailsPage() {
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
   const movieDetails = 'movieDetails'
+    const location =  useLocation();
+    console.log('22', location);
 
   const buildLinkClass = ({ isActive }) => {
     return clsx(css.link, css.linkInfo, isActive && css.active);
@@ -21,9 +23,7 @@ export default function MovieDetailsPage() {
 
    return (
     <div className={css.wrapper}>
-      <button type="button" onClick={goBack} className={css.goBackBtn}>
-        Go back
-      </button>
+      <Link to={location.state} className={css.goBackBtn}>Go back to search</Link>
       {movieDetail && (
         <div className={css.imgWrap}>
           <img
@@ -52,7 +52,7 @@ export default function MovieDetailsPage() {
               <NavLink to="reviews" className={buildLinkClass}>
                 Reviews
               </NavLink>
-            </div>{' '}
+            </div>
           <Outlet />
           </div>
         </div>

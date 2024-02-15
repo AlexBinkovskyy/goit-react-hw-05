@@ -1,18 +1,22 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import css from './MoviesPage.module.css';
-import { fetchData, fetchParams } from '../../apiService/query';
+import { fetchData } from '../../apiService/query';
 import { Page404 } from '../Page404/Page404';
 import { MovieListItem } from '../../components/MovieListItem/MovieListItem';
+import { useSearchParams } from 'react-router-dom';
 
 export const MoviesPage = () => {
   const inputId = useId();
   const input = useRef();
-  const [movieSearch, setMovieSearch] = useState(null);
-  const [movieSearchList, setMovieSearchList] = useState(null);
+
+  const [movieSearch, setMovieSearch] = useState(null); //рядок запиту з інпута
+  const [movieSearchList, setMovieSearchList] = useState(null); // список фільмів з рядка запиту
   const [error, setError] = useState(false);
+  const [params, setParams] = useSearchParams();
+
+  const searchQuery = params.get('searchQuery') ?? '';
 
   const handleSubmit = () => {
-    console.log(input.current.value);
     setMovieSearch(`search/movie?query=${input.current.value}`);
   };
 
@@ -30,6 +34,11 @@ export const MoviesPage = () => {
     return () => {};
   }, [movieSearch]);
 
+  const handleSearch = event => {
+    params.set('searchQuery', event)
+    setParams(params);
+  };
+
   return (
     <div>
       <div className={css.wrapper}>
@@ -41,6 +50,8 @@ export const MoviesPage = () => {
           type="text"
           id={inputId}
           placeholder="Type something here"
+          value={searchQuery}
+          onChange={evt => handleSearch(evt.target.value)}
           className={css.input}
         />
         <button type="submit" onClick={handleSubmit} className={css.btn}>
