@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { FetchAndWriteState, fetchParams } from '../../apiService/query';
 import { MovieCastItem } from '../MovieCastItem/MovieCastItem.jsx';
 
-export const MovieCast = () => {
+export default function MovieCast() {
   const { movieId } = useParams();
   const [movieCast, setMovieCast] = useState(null);
   const fetchType = fetchParams.movieCast.url;
@@ -20,4 +20,4 @@ export const MovieCast = () => {
       )}
     </div>
   );
-};
+}

@@ -8,7 +8,7 @@ import { useSearchParams } from 'react-router-dom';
 const controller = new AbortController();
 const signal = controller.signal;
 
-export const MoviesPage = () => {
+export default function MoviesPage () {
   const inputId = useId();
 
   const [movieSearchList, setMovieSearchList] = useState(null); // список фільмів з рядка запиту
