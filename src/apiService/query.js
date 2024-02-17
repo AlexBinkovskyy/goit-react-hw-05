@@ -50,7 +50,7 @@ export function FetchAndWriteState(movieId, fetchType, stateSetter) {
   let movieDetailsFetchParams = '';
 
   if (movieId) {
-    movieDetailsFetchParams = fetchParams[fetchType].url.replace(
+    movieDetailsFetchParams = fetchType.replace(
       'IdToReplace',
       movieId
     );

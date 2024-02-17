@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useParams } from 'react-router';
-import { FetchAndWriteState, createPosterPath } from '../../apiService/query';
+import { FetchAndWriteState, createPosterPath, fetchParams } from '../../apiService/query';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import css from './MovieDetailsPage.module.css';
 import { Outlet } from 'react-router-dom';
@@ -9,7 +9,7 @@ import clsx from 'clsx';
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
   const [movieDetail, setMovieDetail] = useState(null);
-  const movieDetails = 'movieDetails';
+  const movieDetails = fetchParams.movieDetails.url;
   const location = useLocation();
 
   const backLink = useRef(location.state?.from ?? '/')
