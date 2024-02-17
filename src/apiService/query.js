@@ -29,13 +29,11 @@ export const fetchParams = {
 };
 
 export const fetchData = async (
-  fetchParams
-  //{controller}
+  fetchParams, 
 ) => {
   try {
     const response = await axios.request(
-      fetchParams
-      //{signal: controller.signal},
+      fetchParams,
     );
     return response.data;
   } catch (error) {
@@ -59,11 +57,13 @@ export function FetchAndWriteState(movieId, fetchType, stateSetter) {
   }
 
   useEffect(() => {
+
     async function fetchMovie() {
       try {
         if (!movieDetailsFetchParams) {
           return;
         }
+
         const resp = await fetchData(movieDetailsFetchParams);
         stateSetter(resp);
       } catch (error) {

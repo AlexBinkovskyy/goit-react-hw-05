@@ -5,7 +5,7 @@ import HomePage from '../HomePage/HomePage';
 export const Page404 = () => {
   return (
     <div className={css.wrapper}>
-      <NavLink to="/" className={css.backLink}>
+      <NavLink to="/movies" className={css.backLink}>
         Back to HomePage
       </NavLink>
       <Routes>

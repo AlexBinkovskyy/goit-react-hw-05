@@ -10,21 +10,17 @@ export const Movieslist = ({trends, setTrends}) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const controller = new AbortController;
- 
+    
     async function fetchList() {
       try {
-        const resp = await fetchData(fetchParams.trending, { controller }
-          );
+        const resp = await fetchData(fetchParams.trending);
        setTrends(resp);
       } catch (error) {
         if (error.code !== 'ERR_CANCELED') setError(true);
       }
     }
     fetchList();
-    return () => {
-      controller.abort();
-    };
+    
   }, []);
 
   return (
@@ -36,7 +32,7 @@ export const Movieslist = ({trends, setTrends}) => {
         trends.results && (
           <div>
             <ul>
-              <MovieListItem trends={trends} />
+              <MovieListItem movies={trends} />
             </ul>
           </div>
         )

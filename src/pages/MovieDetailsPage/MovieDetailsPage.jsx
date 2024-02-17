@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { FetchAndWriteState, createPosterPath } from '../../apiService/query';
 import { NavLink, Link, useLocation } from 'react-router-dom';
@@ -12,6 +12,8 @@ export default function MovieDetailsPage() {
   const movieDetails = 'movieDetails';
   const location = useLocation();
 
+  const backLink = useRef(location.state?.from ?? '/')
+
   const buildLinkClass = ({ isActive }) => {
     return clsx(css.link, css.linkInfo, isActive && css.active);
   };
@@ -20,7 +22,7 @@ export default function MovieDetailsPage() {
 
   return (
     <div className={css.wrapper}>
-      <Link to={location.state} className={css.goBackBtn}>
+      <Link to={backLink.current} className={css.goBackBtn}>
         Go back to search
       </Link>
       {movieDetail && (
@@ -45,10 +47,10 @@ export default function MovieDetailsPage() {
             </ul>
             <div className={css.infoWrap}>
               <h3 className={css.titleThird}>Additional information</h3>
-              <NavLink to="cast" className={buildLinkClass} state={location}>
+              <NavLink to="cast" className={buildLinkClass} >
                 Cast
               </NavLink>
-              <NavLink to="reviews" className={buildLinkClass} state={location}>
+              <NavLink to="reviews" className={buildLinkClass} >
                 Reviews
               </NavLink>
             </div>

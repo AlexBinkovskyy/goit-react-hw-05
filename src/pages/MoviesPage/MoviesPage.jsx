@@ -1,64 +1,66 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import css from './MoviesPage.module.css';
 import { fetchData } from '../../apiService/query';
 import { Page404 } from '../Page404/Page404';
 import { MovieListItem } from '../../components/MovieListItem/MovieListItem';
 import { useSearchParams } from 'react-router-dom';
 
+const controller = new AbortController();
+const signal = controller.signal;
+
 export const MoviesPage = () => {
   const inputId = useId();
-  const input = useRef();
 
-  const [movieSearch, setMovieSearch] = useState(null); //рядок запиту з інпута
   const [movieSearchList, setMovieSearchList] = useState(null); // список фільмів з рядка запиту
   const [error, setError] = useState(false);
   const [params, setParams] = useSearchParams();
 
-  const searchQuery = params.get('searchQuery') ?? '';
+  const searchQuery = params.get('query') ?? '';
 
-  const handleSubmit = () => {
-    setMovieSearch(`search/movie?query=${input.current.value}`);
+  const handleSubmit = event => {
+    setError(false);
+    event.preventDefault();
+    const inputValue = event.target.input.value.trim().toLowerCase();
+    if (!inputValue) return;
+    setParams({ query: `search/movie?query=${inputValue}` });
   };
 
   useEffect(() => {
-    if (!movieSearch) return;
+    if (!searchQuery) return;
     async function fetchList() {
       try {
-        const resp = await fetchData(movieSearch);
+        const resp = await fetchData(searchQuery, {signal: signal});
+        if (!resp.results.length) {
+          setError(true);
+        }
         setMovieSearchList(resp);
       } catch (error) {
         if (error.code !== 'ERR_CANCELED') setError(true);
       }
     }
     fetchList();
-    return () => {};
-  }, [movieSearch]);
-
-  const handleSearch = event => {
-    params.set('searchQuery', event)
-    console.log(params.get('searchQuery'));
-    setParams(params);
-  };
+    return (() => {
+      controller.abort();
+    });
+  }, [searchQuery]);
 
   return (
     <div>
-      <div className={css.wrapper}>
+      <form className={css.wrapper} onSubmit={handleSubmit}>
         <label htmlFor={inputId} className={css.label}>
           Search by keyword
         </label>
         <input
-          ref={input}
           type="text"
           id={inputId}
           placeholder="Type something here"
-          value={searchQuery}
-          onChange={evt => handleSearch(evt.target.value)}
+          name="input"
           className={css.input}
         />
-        <button type="submit" onClick={handleSubmit} className={css.btn}>
+        <button type="submit" className={css.btn}>
           Search
         </button>
-      </div>
+      </form>
       {movieSearchList && (
         <div className={css.wrapper}>
           <h3>Search results:</h3>
@@ -68,7 +70,7 @@ export const MoviesPage = () => {
             movieSearchList && (
               <div>
                 <ul>
-                  <MovieListItem trends={movieSearchList}/>
+                  <MovieListItem movies={movieSearchList} />
                 </ul>
               </div>
             )
