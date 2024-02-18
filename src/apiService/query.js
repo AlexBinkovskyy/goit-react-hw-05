@@ -28,11 +28,11 @@ export const fetchParams = {
   },
 };
 
-export const fetchData = async (fetchParams, cancelToken) => {
+export const fetchData = async (fetchParams, signal) => {
+  console.log('fetchData ', fetchParams, signal);
   try {
-    console.log(cancelToken);
     const response = await axios.get(fetchParams, {
-      cancelToken: cancelToken,
+      signal,
     });
     return response.data;
   } catch (error) {
@@ -45,9 +45,9 @@ export const createPosterPath = poster_path => {
   return `https://image.tmdb.org/t/p/w500${poster_path}`;
 };
 
-export function FetchAndWriteState(movieId, fetchType, stateSetter) {
+export function FetchAndWriteState(movieId, fetchType, stateSetter, signal) {
   let movieDetailsFetchParams = '';
-
+  console.log('FetchAndWriteState ', movieId);
   if (movieId) {
     movieDetailsFetchParams = fetchType.replace('IdToReplace', movieId);
   }
@@ -59,12 +59,12 @@ export function FetchAndWriteState(movieId, fetchType, stateSetter) {
           return;
         }
 
-        const resp = await fetchData(movieDetailsFetchParams);
+        const resp = await fetchData( movieDetailsFetchParams, signal);
         stateSetter(resp);
       } catch (error) {
         console.log(error);
       }
     }
     fetchMovie();
-  }, []);
+  }, [movieDetailsFetchParams, stateSetter]);
 }

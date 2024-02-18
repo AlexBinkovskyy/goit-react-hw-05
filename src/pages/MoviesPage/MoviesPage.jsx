@@ -5,7 +5,7 @@ import { Page404 } from '../Page404/Page404';
 import { MovieListItem } from '../../components/MovieListItem/MovieListItem';
 import { useSearchParams } from 'react-router-dom';
 
-export default function MoviesPage () {
+export default function MoviesPage() {
   const inputId = useId();
 
   const [movieSearchList, setMovieSearchList] = useState(null); // список фільмів з рядка запиту
@@ -19,15 +19,17 @@ export default function MoviesPage () {
     event.preventDefault();
     const inputValue = event.target.input.value.trim().toLowerCase();
     if (!inputValue) return;
-    setParams({ query: `search/movie?query=${inputValue}` });
+    setParams({ 'query': `search/movie?query=${inputValue}` });
   };
 
   useEffect(() => {
+    const controller = new AbortController();
 
     if (!searchQuery) return;
+
     async function fetchList() {
       try {
-        const resp = await fetchData(searchQuery);
+        const resp = await fetchData(searchQuery, controller.signal);
         if (!resp.results.length) {
           setError(true);
         }
@@ -37,7 +39,10 @@ export default function MoviesPage () {
       }
     }
     fetchList();
-    
+
+    return () => {
+      controller.abort();
+    };
   }, [searchQuery]);
 
   return (
@@ -75,4 +80,4 @@ export default function MoviesPage () {
       )}
     </div>
   );
-};
+}

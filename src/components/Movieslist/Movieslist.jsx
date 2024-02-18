@@ -6,20 +6,22 @@ import { Page404 } from '../../pages/Page404/Page404';
 import { MovieListItem } from '../MovieListItem/MovieListItem';
 import axios from 'axios';
 
-export const Movieslist = ({ trends, setTrends }) => {
+export const Movieslist = () => {
+
+  const [trends, setTrends] = useState([]);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const { token, cancel } = axios.CancelToken.source();
-
+    const controller = new AbortController();
 
     async function fetchList() {
       try {
-        const resp = await fetchData(fetchParams.trending.url, token);
+        const resp = await fetchData(fetchParams.trending.url, controller.signal);
         setTrends(resp);
       } catch (error) {
         if (axios.isCancel(error)) {
           console.log('Request canceled', error.message);
+          return;
         } else {
           setError(true);
         }
@@ -27,9 +29,9 @@ export const Movieslist = ({ trends, setTrends }) => {
     }
     fetchList();
     return () => {
-      cancel('Optional message');
+      controller.abort();
     };
-  }, []);
+  }, [setTrends]);
 
   return (
     <div className={css.wrapper}>
