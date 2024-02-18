@@ -4,23 +4,31 @@ import { useState } from 'react';
 import css from './Movieslist.module.css';
 import { Page404 } from '../../pages/Page404/Page404';
 import { MovieListItem } from '../MovieListItem/MovieListItem';
+import axios from 'axios';
 
-export const Movieslist = ({trends, setTrends}) => {
-
+export const Movieslist = ({ trends, setTrends }) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    
+    const { token, cancel } = axios.CancelToken.source();
+
+
     async function fetchList() {
       try {
-        const resp = await fetchData(fetchParams.trending);
-       setTrends(resp);
+        const resp = await fetchData(fetchParams.trending.url, token);
+        setTrends(resp);
       } catch (error) {
-        if (error.code !== 'ERR_CANCELED') setError(true);
+        if (axios.isCancel(error)) {
+          console.log('Request canceled', error.message);
+        } else {
+          setError(true);
+        }
       }
     }
     fetchList();
-    
+    return () => {
+      cancel('Optional message');
+    };
   }, []);
 
   return (

@@ -28,13 +28,12 @@ export const fetchParams = {
   },
 };
 
-export const fetchData = async (
-  fetchParams, 
-) => {
+export const fetchData = async (fetchParams, cancelToken) => {
   try {
-    const response = await axios.request(
-      fetchParams,
-    );
+    console.log(cancelToken);
+    const response = await axios.get(fetchParams, {
+      cancelToken: cancelToken,
+    });
     return response.data;
   } catch (error) {
     console.error(error);
@@ -50,14 +49,10 @@ export function FetchAndWriteState(movieId, fetchType, stateSetter) {
   let movieDetailsFetchParams = '';
 
   if (movieId) {
-    movieDetailsFetchParams = fetchType.replace(
-      'IdToReplace',
-      movieId
-    );
+    movieDetailsFetchParams = fetchType.replace('IdToReplace', movieId);
   }
 
   useEffect(() => {
-
     async function fetchMovie() {
       try {
         if (!movieDetailsFetchParams) {

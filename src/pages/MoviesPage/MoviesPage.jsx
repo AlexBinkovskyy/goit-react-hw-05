@@ -5,9 +5,6 @@ import { Page404 } from '../Page404/Page404';
 import { MovieListItem } from '../../components/MovieListItem/MovieListItem';
 import { useSearchParams } from 'react-router-dom';
 
-const controller = new AbortController();
-const signal = controller.signal;
-
 export default function MoviesPage () {
   const inputId = useId();
 
@@ -26,10 +23,11 @@ export default function MoviesPage () {
   };
 
   useEffect(() => {
+
     if (!searchQuery) return;
     async function fetchList() {
       try {
-        const resp = await fetchData(searchQuery, {signal: signal});
+        const resp = await fetchData(searchQuery);
         if (!resp.results.length) {
           setError(true);
         }
@@ -39,9 +37,7 @@ export default function MoviesPage () {
       }
     }
     fetchList();
-    return (() => {
-      controller.abort();
-    });
+    
   }, [searchQuery]);
 
   return (
