@@ -1,6 +1,6 @@
 import { useEffect, useId, useState } from 'react';
 import css from './MoviesPage.module.css';
-import { fetchData } from '../../apiService/query';
+import { fetchData, fetchParams } from '../../apiService/query';
 import { Page404 } from '../Page404/Page404';
 import { MovieListItem } from '../../components/MovieListItem/MovieListItem';
 import { useSearchParams } from 'react-router-dom';
@@ -12,14 +12,14 @@ export default function MoviesPage() {
   const [error, setError] = useState(false);
   const [params, setParams] = useSearchParams();
 
-  const searchQuery = params.get('query') ?? '';
+  const searchQuery = fetchParams.movieSearch.url + params.get('query') ?? '';
 
   const handleSubmit = event => {
     setError(false);
     event.preventDefault();
     const inputValue = event.target.input.value.trim().toLowerCase();
     if (!inputValue) return;
-    setParams({ 'query': `search/movie?query=${inputValue}` });
+    setParams({ 'query': inputValue });
   };
 
   useEffect(() => {
