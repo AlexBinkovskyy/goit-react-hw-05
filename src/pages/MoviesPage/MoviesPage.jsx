@@ -12,7 +12,7 @@ export default function MoviesPage() {
   const [error, setError] = useState(false);
   const [params, setParams] = useSearchParams();
 
-  const searchQuery = fetchParams.movieSearch.url + params.get('query') ?? '';
+  const searchQuery = params.get('query') ? `${fetchParams.movieSearch.url}${params.get('query')}` : null;
 
   const handleSubmit = event => {
     setError(false);
@@ -25,7 +25,7 @@ export default function MoviesPage() {
   useEffect(() => {
     const controller = new AbortController();
 
-    if (!searchQuery) return;
+    if (searchQuery === null) return;
 
     async function fetchList() {
       try {
