@@ -29,7 +29,6 @@ export const fetchParams = {
 };
 
 export const fetchData = async (fetchParams, signal) => {
-  console.log('fetchData ', fetchParams, signal);
   try {
     const response = await axios.get(fetchParams, {
       signal,
@@ -42,6 +41,7 @@ export const fetchData = async (fetchParams, signal) => {
 };
 
 export const createPosterPath = poster_path => {
+  console.log(poster_path );
   return `https://image.tmdb.org/t/p/w500${poster_path}`;
 };
 
