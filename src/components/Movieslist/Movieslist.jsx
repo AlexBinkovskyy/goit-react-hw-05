@@ -41,8 +41,8 @@ export const Movieslist = () => {
       ) : (
         trends.results && (
           <div>
-            <ul>
-              <MovieListItem movies={trends} />
+            <ul className={css.list}>
+              <MovieListItem movies={trends}  />
             </ul>
           </div>
         )
