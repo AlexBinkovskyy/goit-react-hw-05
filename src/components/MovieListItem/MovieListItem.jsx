@@ -21,7 +21,7 @@ export const MovieListItem = ({ movies }) => {
                       : defaultImg
                   }
                   className={css.posterImage}
-                  width='300px'
+                  width="300px"
                 ></img>
               </div>
               <h3 className={css.title}>{trend.title}</h3>

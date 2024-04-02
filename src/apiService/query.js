@@ -41,13 +41,11 @@ export const fetchData = async (fetchParams, signal) => {
 };
 
 export const createPosterPath = poster_path => {
-  console.log(poster_path );
   return `https://image.tmdb.org/t/p/w500${poster_path}`;
 };
 
 export function FetchAndWriteState(movieId, fetchType, stateSetter, signal) {
   let movieDetailsFetchParams = '';
-  console.log('FetchAndWriteState ', movieId);
   if (movieId) {
     movieDetailsFetchParams = fetchType.replace('IdToReplace', movieId);
   }
@@ -59,7 +57,7 @@ export function FetchAndWriteState(movieId, fetchType, stateSetter, signal) {
           return;
         }
 
-        const resp = await fetchData( movieDetailsFetchParams, signal);
+        const resp = await fetchData(movieDetailsFetchParams, signal);
         stateSetter(resp);
       } catch (error) {
         console.log(error);
@@ -68,3 +66,5 @@ export function FetchAndWriteState(movieId, fetchType, stateSetter, signal) {
     fetchMovie();
   }, [movieDetailsFetchParams, stateSetter]);
 }
+
+

@@ -12,21 +12,23 @@ export default function MoviesPage() {
   const [error, setError] = useState(false);
   const [params, setParams] = useSearchParams();
 
-  const searchQuery = params.get('query') ? `${fetchParams.movieSearch.url}${params.get('query')}` : null;
+  const searchQuery = params.get('query')
+    ? `${fetchParams.movieSearch.url}${params.get('query')}`
+    : null;
 
   const handleSubmit = event => {
     setError(false);
     event.preventDefault();
     const inputValue = event.target.input.value.trim().toLowerCase();
     if (!inputValue) return;
-    setParams({ 'query': inputValue });
+    setParams({ query: inputValue });
   };
 
   useEffect(() => {
     const controller = new AbortController();
 
     if (searchQuery === null) return;
-
+    console.log(searchQuery);
     async function fetchList() {
       try {
         const resp = await fetchData(searchQuery, controller.signal);
