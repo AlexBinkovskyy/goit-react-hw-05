@@ -24,7 +24,6 @@ export default function MovieDetailsPage() {
     return clsx(css.link, css.linkInfo, isActive && css.active);
   };
   const controller = new AbortController();
-
   
   FetchAndWriteState(movieId, movieDetails, setMovieDetail, controller.signal);
 

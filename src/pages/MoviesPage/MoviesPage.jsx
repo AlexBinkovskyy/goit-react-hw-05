@@ -28,7 +28,6 @@ export default function MoviesPage() {
     const controller = new AbortController();
 
     if (searchQuery === null) return;
-    console.log(searchQuery);
     async function fetchList() {
       try {
         const resp = await fetchData(searchQuery, controller.signal);
