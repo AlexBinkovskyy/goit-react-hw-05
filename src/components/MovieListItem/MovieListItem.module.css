@@ -13,6 +13,8 @@
 }
 
 .posterImage {
+  display: block;
+  margin: 0 auto;
   height: 100%;
   object-fit: contain;
 }
@@ -27,14 +29,17 @@
 .itemWrapper {
   display: flex;
   flex-wrap: wrap;
-  row-gap: 30px;
+  row-gap: 40px;
   padding-top: 15px;
   align-items: center;
   justify-content: space-between;
 }
 .title {
   padding: 20px 0;
-  width: 100%;
+  width: 300px;
+  height: 85px;
+  padding-left: 10px;
+  padding-right: 10px;
   text-align: center;
-  font-size: 15px;
+  font-size: 17px;
 }

@@ -1,0 +1,10 @@
+.wrapper {
+  position: relative;
+  height: max-content;
+}
+
+.spinner {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+}

@@ -24,7 +24,7 @@ export const MovieListItem = ({ movies }) => {
                   width="300px"
                 ></img>
               </div>
-              <h3 className={css.title}>{trend.title}</h3>
+              <h2 className={css.title}>{trend.title}</h2>
             </Link>
           </li>
         );
