@@ -8,36 +8,35 @@ import axios from 'axios';
 export const Movieslist = () => {
   const [trends, setTrends] = useState([]);
   const [error, setError] = useState(false);
-  // const [page, setPage] = useState(0);
+  const [page, setPage] = useState(0);
 
-  // const loadMore = entries => {
-  //   try {
-  //     if (entries[0].isIntersecting) {
-  //       setNextPage();
-  //     }
-  //   } catch (error) {}
-  // };
+  const loadMore = entries => {
+    try {
+      if (entries[0].isIntersecting) {
+        setNextPage();
+      }
+    } catch (error) {}
+  };
 
-  // const observer = new IntersectionObserver(loadMore, {
-  //   rootMargin: '50px',
-  //   threshold: 1.0,
-  // });
+  const observer = new IntersectionObserver(loadMore, {
+    rootMargin: '50px',
+    threshold: 1.0,
+  });
 
-  // useEffect(() => {
-  //   const target = document.querySelector('#target');
-  //   observer.observe(target);
-  //   loadMore();
+  useEffect(() => {
+    const target = document.querySelector('#target');
+    observer.observe(target);
+    loadMore();
 
-  //   // return observer.unobserve(target);
-  // }, [setPage]);
+    // return observer.unobserve(target);
+  }, [setPage]);
 
   useEffect(() => {
     const controller = new AbortController();
     async function fetchList() {
       try {
         const resp = await fetchData(
-          `${fetchParams.trending.url}`,
-          //?page=${page},
+          `${fetchParams.trending.url}?page=${page}`,
           controller.signal
         );
         setTrends(resp);
@@ -56,9 +55,9 @@ export const Movieslist = () => {
     };
   }, []);
 
-  // const setNextPage = () => {
-  //   setPage(prev => prev + 1);
-  // };
+  const setNextPage = () => {
+    setPage(prev => prev + 1);
+  };
 
   return (
     <>
