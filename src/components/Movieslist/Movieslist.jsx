@@ -19,7 +19,7 @@ export const Movieslist = () => {
     setIsLoading(true);
     async function fetchList() {
       try {
-        if(page === trends.page) return setIsLoading(false)
+        if (page === trends.page) return setIsLoading(false);
         if (!trends.length && trends.length) {
           const resp = await fetchData(
             `${fetchParams.trending.url}?page=${page}`,
@@ -36,7 +36,7 @@ export const Movieslist = () => {
           }));
           setIsLoading(false);
         }
-        
+
         const resp = await fetchData(
           `${fetchParams.trending.url}?page=${page}`,
           controller.signal
@@ -86,6 +86,11 @@ export const Movieslist = () => {
             {setStorageTrends(trends)}
             <LoadMore setPage={setPage} />
           </div>
+          <button className={css.upper} disabled>
+            <svg className={css.upperIco} width="40" height="40 ">
+              <use href="./outline_icon-min.svg#icon-circle-up"></use>
+            </svg>
+          </button>
           <div id="target"></div>
         </>
       ) : (

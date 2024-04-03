@@ -1,10 +1,12 @@
 .wrapper {
   position: relative;
   height: max-content;
+  background-color: rgba(0, 0, 0, 0.212);
 }
 
 .spinner {
   position: absolute;
-  top: 50vh;
-  left: 50vw;
+  top: 45vh;
+  left: 45vw;
+
 }

@@ -1,8 +1,11 @@
 .wrapper {
   position: relative;
+  
 }
 
 .list {
+  overflow: scroll;
+  height: 55vh;
   position: absolute;
   width: 100%;
   align-items: start;

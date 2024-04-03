@@ -4,6 +4,7 @@ import { fetchData, fetchParams } from '../../apiService/query';
 import { Page404 } from '../Page404/Page404';
 import { MovieListItem } from '../../components/MovieListItem/MovieListItem';
 import { useSearchParams } from 'react-router-dom';
+import { LoadMore } from '../../components/LoadMore/LoadMore';
 
 export default function MoviesPage() {
   const inputId = useId();
@@ -11,9 +12,10 @@ export default function MoviesPage() {
   const [movieSearchList, setMovieSearchList] = useState(null); // список фільмів з рядка запиту
   const [error, setError] = useState(false);
   const [params, setParams] = useSearchParams();
+  const [page, setPage] = useState(1);
 
   const searchQuery = params.get('query')
-    ? `${fetchParams.movieSearch.url}${params.get('query')}`
+    ? `${fetchParams.movieSearch.url}${params.get('query')}&page=${page}`
     : null;
 
   const handleSubmit = event => {
@@ -77,8 +79,10 @@ export default function MoviesPage() {
               </div>
             )
           )}
+          
         </div>
       )}
+      <LoadMore setPage={setPage}/>
     </div>
   );
 }

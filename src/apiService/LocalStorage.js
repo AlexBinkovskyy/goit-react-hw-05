@@ -1,5 +1,5 @@
 export const getStorage = () => {
-  const res = JSON.parse(localStorage.getItem('trends'));
+  const res = JSON.parse(sessionStorage.getItem('trends'));
   if (res) {
     return res;
   }
@@ -7,5 +7,5 @@ export const getStorage = () => {
 };
 
 export const setStorageTrends = data => {
-  localStorage.setItem('trends', JSON.stringify(data));
+  sessionStorage.setItem('trends', JSON.stringify(data));
 };
