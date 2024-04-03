@@ -8,41 +8,54 @@ import { LoadMore } from '../../components/LoadMore/LoadMore';
 
 export default function MoviesPage() {
   const inputId = useId();
+  const initState = {
+    page: 1,
+    results: [],
+    total_pages: '',
+    total_results: '',
+  };
 
-  const [movieSearchList, setMovieSearchList] = useState(null); // список фільмів з рядка запиту
+  const [movieSearchList, setMovieSearchList] = useState(initState); // список фільмів з рядка запиту
   const [error, setError] = useState(false);
   const [params, setParams] = useSearchParams();
-  const [page, setPage] = useState(1);
-
+  const [page, setPage] = useState(initState.page);
+  const [inputValue, setInputValue] = useState('');
+  
   const searchQuery = params.get('query')
     ? `${fetchParams.movieSearch.url}${params.get('query')}&page=${page}`
     : null;
 
   const handleSubmit = event => {
-    setError(false);
     event.preventDefault();
-    const inputValue = event.target.input.value.trim().toLowerCase();
-    if (!inputValue) return;
-    setParams({ query: inputValue });
+    setMovieSearchList(initState);
+    setPage(1);
+    setError(false);
+    if (!inputValue.trim()) return;
+    setParams({ query: inputValue.trim().toLowerCase(), page: 1 });
   };
 
   useEffect(() => {
     const controller = new AbortController();
+    if (!searchQuery) return;
 
-    if (searchQuery === null) return;
     async function fetchList() {
       try {
         const resp = await fetchData(searchQuery, controller.signal);
-        if (!resp.results.length) {
-          setError(true);
-        }
-        setMovieSearchList(resp);
+
+        setMovieSearchList(prevState => ({
+          ...prevState,
+          page: resp.page,
+          results: Array.isArray(prevState.results)
+            ? [...prevState.results, ...resp.results]
+            : [...resp.results],
+          total_pages: resp.total_pages,
+          total_results: resp.total_results,
+        }));
       } catch (error) {
         if (error.code !== 'ERR_CANCELED') setError(true);
       }
     }
     fetchList();
-
     return () => {
       controller.abort();
     };
@@ -50,7 +63,7 @@ export default function MoviesPage() {
 
   return (
     <div>
-      <form className={css.wrapper} onSubmit={handleSubmit}>
+      <form className={css.wrapper} onSubmit={handleSubmit} id="form">
         <label htmlFor={inputId} className={css.label}>
           Search by keyword
         </label>
@@ -60,6 +73,8 @@ export default function MoviesPage() {
           placeholder="Type something here"
           name="input"
           className={css.input}
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}
         />
         <button type="submit" className={css.btn}>
           Search
@@ -79,10 +94,9 @@ export default function MoviesPage() {
               </div>
             )
           )}
-          
         </div>
       )}
-      <LoadMore setPage={setPage}/>
+      {movieSearchList.results.length ? <LoadMore setPage={setPage}/> : null }
     </div>
   );
 }

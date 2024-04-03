@@ -6,12 +6,19 @@ import { MovieListItem } from '../MovieListItem/MovieListItem';
 import axios from 'axios';
 import { Spinner } from '../Spinner/Spinner';
 import { LoadMore } from '../LoadMore/LoadMore';
-import { getStorage, setStorageTrends } from '../../apiService/LocalStorage';
+import {getStorage, setStorageTrends } from '../../apiService/LocalStorage';
 
 export const Movieslist = () => {
-  const [trends, setTrends] = useState(getStorage());
+  const initState = {
+    page: 1,
+    results: [],
+    total_pages: '',
+    total_results: '',
+  }
+
+  const [trends, setTrends] = useState(getStorage('trends') ?? initState);
   const [error, setError] = useState(false);
-  const [page, setPage] = useState(trends.page ?? 1);
+  const [page, setPage] = useState(trends.page);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -19,10 +26,10 @@ export const Movieslist = () => {
     setIsLoading(true);
     async function fetchList() {
       try {
-        if (page === trends.page) return setIsLoading(false);
-        if (!trends.length && trends.length) {
+
+        if (!trends.results.length) {
           const resp = await fetchData(
-            `${fetchParams.trending.url}?page=${page}`,
+            `${fetchParams.trending.url}?page=${trends.page}`,
             controller.signal
           );
           setTrends(prevState => ({
@@ -36,7 +43,7 @@ export const Movieslist = () => {
           }));
           setIsLoading(false);
         }
-
+    if (trends.page === page) return setIsLoading(false);
         const resp = await fetchData(
           `${fetchParams.trending.url}?page=${page}`,
           controller.signal
@@ -65,6 +72,7 @@ export const Movieslist = () => {
       controller.abort();
     };
   }, [page]);
+  
 
   return (
     <>
@@ -83,7 +91,7 @@ export const Movieslist = () => {
                 </div>
               )
             )}
-            {setStorageTrends(trends)}
+            {setStorageTrends('trends', trends)}
             <LoadMore setPage={setPage} />
           </div>
           <button className={css.upper} disabled>

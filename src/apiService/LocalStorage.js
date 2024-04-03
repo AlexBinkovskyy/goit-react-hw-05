@@ -1,11 +1,11 @@
-export const getStorage = () => {
-  const res = JSON.parse(sessionStorage.getItem('trends'));
+export const getStorage = (key) => {
+  const res = JSON.parse(sessionStorage.getItem(`${key}`));
   if (res) {
     return res;
   }
-  return []
+  return null
 };
 
-export const setStorageTrends = data => {
-  sessionStorage.setItem('trends', JSON.stringify(data));
+export const setStorageTrends = (key = 'trends', data) => {
+  sessionStorage.setItem(`${key}`, JSON.stringify(data));
 };
