@@ -1,4 +1,4 @@
-import css from './LoadMore.module.css'
+import css from './LoadMore.module.css';
 
 export const LoadMore = ({ setPage }) => {
   const handleClick = () => {

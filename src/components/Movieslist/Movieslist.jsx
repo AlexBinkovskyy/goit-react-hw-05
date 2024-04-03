@@ -6,7 +6,7 @@ import { MovieListItem } from '../MovieListItem/MovieListItem';
 import axios from 'axios';
 import { Spinner } from '../Spinner/Spinner';
 import { LoadMore } from '../LoadMore/LoadMore';
-import {getStorage, setStorageTrends } from '../../apiService/LocalStorage';
+import { getStorage, setStorageTrends } from '../../apiService/LocalStorage';
 
 export const Movieslist = () => {
   const initState = {
@@ -14,7 +14,7 @@ export const Movieslist = () => {
     results: [],
     total_pages: '',
     total_results: '',
-  }
+  };
 
   const [trends, setTrends] = useState(getStorage('trends') ?? initState);
   const [error, setError] = useState(false);
@@ -26,7 +26,6 @@ export const Movieslist = () => {
     setIsLoading(true);
     async function fetchList() {
       try {
-
         if (!trends.results.length) {
           const resp = await fetchData(
             `${fetchParams.trending.url}?page=${trends.page}`,
@@ -43,7 +42,7 @@ export const Movieslist = () => {
           }));
           setIsLoading(false);
         }
-    if (trends.page === page) return setIsLoading(false);
+        if (trends.page === page) return setIsLoading(false);
         const resp = await fetchData(
           `${fetchParams.trending.url}?page=${page}`,
           controller.signal
@@ -72,7 +71,6 @@ export const Movieslist = () => {
       controller.abort();
     };
   }, [page]);
-  
 
   return (
     <>
@@ -94,11 +92,6 @@ export const Movieslist = () => {
             {setStorageTrends('trends', trends)}
             <LoadMore setPage={setPage} />
           </div>
-          <button className={css.upper} disabled>
-            <svg className={css.upperIco} width="40" height="40 ">
-              <use href="./outline_icon-min.svg#icon-circle-up"></use>
-            </svg>
-          </button>
           <div id="target"></div>
         </>
       ) : (
